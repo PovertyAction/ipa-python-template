@@ -38,7 +38,7 @@ technical documents).
   markdown, jupyter notebooks, python scripts, R scripts, etc. makes it easier to
   review, update, and deploy technical documentation.
 - We also recommend using in Integrated Development Environment (IDE).
-  Preferred options are VS Code or Positron.
+  Preferred options are `VS Code` or `Positron`.
 
 | Platform  | Commands                                                            |
 | --------- | ------------------------------------------------------------------- |
@@ -50,7 +50,6 @@ technical documents).
 | --------- | ------------------------------------------------------------------- |
 | Windows   | `winget install Posit.Positron`                                     |
 | Mac       | `brew install --cask positron`                                      |
-| Linux     | `sudo snap install code --classic`                                  |
 
 As a shortcut, if you already have `Just` installed, you can run the following to
 install required software and build a python virtual environment that is used to build
