@@ -90,8 +90,8 @@ pre-install:
 [linux]
 pre-install:
     brew install just uv gh
-    curl -sfL https://github.com/quarto-dev/quarto-cli/releases/download/v1.5.54/quarto-1.5.54-linux-amd64.deb  | sudo apt install ./quarto-1.5.54-linux-amd64.deb
-    rm quarto-1.5.54-linux-amd64.deb
+    # curl -sfL https://github.com/quarto-dev/quarto-cli/releases/download/v1.5.54/quarto-1.5.54-linux-amd64.deb  | sudo apt install ./quarto-1.5.54-linux-amd64.deb
+    # rm quarto-1.5.54-linux-amd64.deb
 
 [macos]
 pre-install:
