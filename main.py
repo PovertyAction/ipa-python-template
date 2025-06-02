@@ -6,7 +6,10 @@ from box_sdk_gen import (
     BoxJWTAuth,
     JWTConfig,
 )
+from dotenv import load_dotenv
 from tqdm import tqdm
+
+load_dotenv()
 
 # Constants for file paths
 EXCEL_PATHS_FILE = "likely_surveys.txt"
@@ -17,7 +20,9 @@ jwt_config = JWTConfig.from_config_json_string(config)
 auth = BoxJWTAuth(config=jwt_config)
 client = BoxClient(auth=auth)
 service_account = client.users.get_user_me()
-# print(f"Service Account: {service_account.name} ({service_account.id}), ({service_account.login})")
+print(
+    f"Service Account: {service_account.name} ({service_account.id}), ({service_account.login})"
+)
 
 
 def append_to_file(file_path, content):
@@ -171,7 +176,7 @@ def search_box_recursively(
 
 
 # Start the recursive search from the specified folder
-folder_id = 251883083502  # 1509932719
+folder_id = 251883083502  # AIT project  # 1509932719 # CP projects
 
 # Load checkpoint data
 checkpoint = load_checkpoint()
