@@ -23,12 +23,11 @@
 ## Checklist ✅
 
 - [ ] I have run and tested my changes locally
-- [ ] I have limit this PR to less than 1000 lines of code change (if not, explain why)
+- [ ] I have limited this PR to less than 1000 lines of code change (if not, explain why)
 - [ ] I have updated/added tests to cover my changes (if applicable)
 - [ ] I have updated/added requirements to cover my changes (if applicable)
 - [ ] I have run linting and formatting on any code changes (if applicable)
 - [ ] I have updated the documentation (README, etc.) accordingly
-- [ ] I have reviewed and resolved any merge conflict
 
 ## Reviewer Emoji Legend
 
