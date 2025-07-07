@@ -14,7 +14,6 @@ system-info:
     @echo "CPU architecture: {{ arch() }}"
     @echo "Operating system type: {{ os_family() }}"
     @echo "Operating system: {{ os() }}"
-    @echo "Home directory: {{ home_directory() }}"
 
 # Clean venv
 clean:
@@ -32,7 +31,7 @@ update-reqs:
 venv:
     uv sync
     uv tool install pre-commit
-    pre-commit install
+    uv run pre-commit install
 
 activate-venv:
     uv shell
@@ -85,15 +84,14 @@ pre-commit-run:
 
 [windows]
 pre-install:
-    winget install Casey.Just astral-sh.uv GitHub.cli Posit.Quarto
+    winget install Casey.Just astral-sh.uv GitHub.cli Posit.Quarto OpenJS.NodeJS
+    npm install -g markdownlint-cli
 
 [linux]
 pre-install:
-    brew install just uv gh
-    curl -sfL https://github.com/quarto-dev/quarto-cli/releases/download/v1.5.54/quarto-1.5.54-linux-amd64.deb  | sudo apt install ./quarto-1.5.54-linux-amd64.deb
-    rm quarto-1.5.54-linux-amd64.deb
+    brew install just uv gh markdownlint-cli
 
 [macos]
 pre-install:
-    brew install just uv gh
+    brew install just uv gh markdownlint-cli
     brew install --cask quarto
