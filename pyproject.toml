@@ -18,6 +18,7 @@ dependencies = [
 
 [tool.uv]
 dev-dependencies = [
+    "codespell>=2.4.1",
     "pre-commit>=4.2.0",
     "ruff>=0.7.4",
 ]
@@ -66,5 +67,5 @@ docstring-code-line-length = 88
 
 [tool.codespell]
 builtin = "clear,rare,informal,usage,code,names"
-ignore-words-list = "adn,master,uint,wrod"
-skip = "./.*,codespell_lib/data/*,codespell_lib/tests/*"
+ignore-words-list = "jupyter,ipa"
+skip = "uv.lock"
