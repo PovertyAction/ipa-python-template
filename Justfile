@@ -1,97 +1,144 @@
-# Set the shell to use
-# set shell := ["nu", "-c"]
 # Set shell for Windows
-
 set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
 
-# Set path to virtual environment's python
+# List available recipes
+[private]
+default:
+    @just --list
 
-venv_dir := ".venv"
-python := venv_dir + if os_family() == "windows" { "/Scripts/python.exe" } else { "/bin/python3" }
+# ---------------------------------------------------------------------------
+# Setup
+# ---------------------------------------------------------------------------
+
+# Install required system tools, then build the environment
+[group("setup")]
+get-started: pre-install venv
+
+# Install required system tools
+[group("setup")]
+[windows]
+pre-install:
+    winget install astral-sh.uv GitHub.cli
+
+[group("setup")]
+[linux]
+pre-install:
+    brew install uv gh
+
+[group("setup")]
+[macos]
+pre-install:
+    brew install uv gh
+
+# Create/update the virtual environment and install git hooks
+[group("setup")]
+venv:
+    uv sync
+    uv run pre-commit install
+
+# Upgrade locked dependencies and pre-commit hooks
+[group("setup")]
+update-reqs:
+    uv lock --upgrade
+    uv sync
+    uv run pre-commit autoupdate
+
+# Remove the virtual environment
+[group("setup")]
+[unix]
+clean:
+    rm -rf .venv
+
+# Remove the virtual environment
+[group("setup")]
+[windows]
+clean:
+    if (Test-Path .venv) { Remove-Item -Recurse -Force .venv }
 
 # Display system information
+[group("setup")]
 system-info:
     @echo "CPU architecture: {{ arch() }}"
     @echo "Operating system type: {{ os_family() }}"
     @echo "Operating system: {{ os() }}"
 
-# Clean venv
-clean:
-    rm -rf .venv
+# ---------------------------------------------------------------------------
+# Develop
+# ---------------------------------------------------------------------------
 
-# Setup environment
-get-started: pre-install venv
-
-# Update project software versions in requirements
-update-reqs:
-    uv lock
-    pre-commit autoupdate
-
-# create virtual environment
-venv:
-    uv sync
-    uv tool install pre-commit
-    uv run pre-commit install
-
-activate-venv:
-    uv shell
-
-# launch jupyter lab
+# Launch Jupyter Lab
+[group("develop")]
 lab:
     uv run jupyter lab
 
-# Preview the quarto project
+# Preview the Quarto docs site
+[group("develop")]
 preview-docs:
-    quarto preview
+    quarto preview docs
 
-# Build the quarto project
+# Render the Quarto docs site
+[group("develop")]
 build-docs:
-    quarto render
+    quarto render docs
+
+# ---------------------------------------------------------------------------
+# Check
+# ---------------------------------------------------------------------------
 
 # Lint python code
+[group("check")]
 lint-py:
-    uv run ruff check
+    uv run ruff check .
 
 # Format python code
-fmt-python:
-    uv run ruff format
+[group("check")]
+fmt-py *paths=".":
+    uv run ruff format {{ paths }}
 
-# Format a single python file, "f"
-fmt-py f:
-    uv run ruff format {{ f }}
-
-# Lint sql scripts
+# Lint sql scripts (auto-fix)
+[group("check")]
 lint-sql:
-    uv run sqlfluff fix --dialect duckdb
+    uv run sqlfluff fix --dialect duckdb .
 
-# Format all markdown and config files
-fmt-markdown:
-    uv run mdformat .
+# Format markdown and Quarto files
+[group("check")]
+fmt-md *paths=".":
+    uv run panache format {{ paths }}
 
-# Format a single markdown file, "f"
-fmt-md f:
-    uv run mdformat {{ f }}
+# Check markdown/Quarto formatting without changing files
+[group("check")]
+fmt-check-md:
+    uv run panache format --check .
 
-# Check format of all markdown files
-fmt-check-markdown:
-    uv run mdformat --check .
+# Lint markdown and Quarto files
+[group("check")]
+lint-md:
+    uv run panache lint .
 
-fmt-all: lint-py fmt-python lint-sql fmt-markdown
+# Run the test suite
+[group("check")]
+test *args:
+    uv run pytest {{ args }}
 
-# Run pre-commit hooks
+# Run the test suite with coverage
+[group("check")]
+test-cov:
+    uv run pytest --cov=project_name --cov-report=term-missing
+
+# Format everything
+[group("check")]
+fmt-all: fmt-py fmt-md
+
+# Run all pre-commit hooks against all files
+[group("check")]
 pre-commit-run:
-    pre-commit run
+    uv run pre-commit run --all-files
 
-[windows]
-pre-install:
-    winget install Casey.Just astral-sh.uv GitHub.cli Posit.Quarto OpenJS.NodeJS
-    npm install -g markdownlint-cli
+# Run every check (lint, format check, tests, hooks)
+[group("check")]
+check-all: lint-py lint-md fmt-check-md test pre-commit-run
 
-[linux]
-pre-install:
-    brew install just uv gh markdownlint-cli
-
-[macos]
-pre-install:
-    brew install just uv gh markdownlint-cli
-    brew install --cask quarto
+# Backwards-compatible aliases
+alias fmt-python := fmt-py
+alias fmt-markdown := fmt-md
+alias fmt-check-markdown := fmt-check-md

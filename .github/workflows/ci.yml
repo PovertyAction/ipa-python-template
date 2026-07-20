@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install uv and set the python version
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: '3.12'
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+      - name: Sync uv
+        run: uv sync --locked
+      - uses: pre-commit/action@v3.0.1
+
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install uv and set the python version
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: '3.12'
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+      - name: Sync uv
+        run: uv sync --locked
+      - name: Run tests
+        run: uv run pytest
