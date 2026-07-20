@@ -18,32 +18,23 @@ get-started: pre-install venv
 [group("setup")]
 [windows]
 pre-install:
-    winget install Casey.Just astral-sh.uv GitHub.cli Posit.Quarto
+    winget install astral-sh.uv GitHub.cli
 
 [group("setup")]
 [linux]
 pre-install:
-    brew install just uv gh
+    brew install uv gh
 
 [group("setup")]
 [macos]
 pre-install:
-    brew install just uv gh
-    brew install --cask quarto
+    brew install uv gh
 
 # Create/update the virtual environment and install git hooks
 [group("setup")]
 venv:
     uv sync
     uv run pre-commit install
-
-# Print how to activate the virtual environment
-[group("setup")]
-activate-venv:
-    @echo "Windows (PowerShell): .venv\Scripts\Activate.ps1"
-    @echo "Windows (Git Bash):   source .venv/Scripts/activate"
-    @echo "macOS/Linux:          source .venv/bin/activate"
-    @echo "Or prefix commands with 'uv run' instead."
 
 # Upgrade locked dependencies and pre-commit hooks
 [group("setup")]
