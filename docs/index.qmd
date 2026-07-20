@@ -2,5 +2,5 @@
 title: "Project Name"
 ---
 
-Project documentation. Edit `docs/index.qmd` and run `just preview-docs` to see
-changes live, or `just build-docs` to render the site.
+Project documentation. Edit `docs/index.qmd` and run `just preview-docs` to see changes
+live, or `just build-docs` to render the site.
