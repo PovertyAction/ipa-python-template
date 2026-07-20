@@ -1,0 +1,13 @@
+# Panache: formatter + linter for Markdown and Quarto files
+# docs: https://panache.bz/guide/configuration.html
+flavor = "gfm" # .qmd files are auto-detected as quarto flavor
+
+exclude = ["docs/_site/", "docs/.quarto/", "LICENSE"]
+
+[format]
+line-width = 88 # match ruff line-length
+wrap = "reflow"
+line-ending = "auto"
+
+[extensions]
+task-lists = true # keep GitHub PR-template checkboxes intact

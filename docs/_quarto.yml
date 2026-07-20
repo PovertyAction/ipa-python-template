@@ -1,0 +1,11 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Project Name"
+
+format:
+  html:
+    theme: cosmo
+    toc: true

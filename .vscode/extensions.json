@@ -5,7 +5,7 @@
         "ms-python.vscode-python-envs",
         "charliermarsh.ruff",
         "github.vscode-pull-request-github",
-        "davidanson.vscode-markdownlint",
+        "jolars.panache",
         "quarto.quarto",
         "skellock.just",
         "yzhang.markdown-all-in-one",
