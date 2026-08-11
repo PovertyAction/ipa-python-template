@@ -24,7 +24,8 @@ get-started: pre-install venv
 
 # Update project software versions in requirements
 update-reqs:
-    uv lock
+    uv lock --upgrade
+    uv sync
     pre-commit autoupdate
 
 # create virtual environment
@@ -32,9 +33,6 @@ venv:
     uv sync
     uv tool install pre-commit
     uv run pre-commit install
-
-activate-venv:
-    uv shell
 
 # launch jupyter lab
 lab:
@@ -85,13 +83,13 @@ pre-commit-run:
 [windows]
 pre-install:
     winget install Casey.Just astral-sh.uv GitHub.cli Posit.Quarto OpenJS.NodeJS
-    npm install -g markdownlint-cli
+    npm install -g markdownlint-cli2
 
 [linux]
 pre-install:
-    brew install just uv gh markdownlint-cli
+    brew install just uv gh markdownlint-cli2
 
 [macos]
 pre-install:
-    brew install just uv gh markdownlint-cli
+    brew install just uv gh markdownlint-cli2
     brew install --cask quarto
