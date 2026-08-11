@@ -24,7 +24,8 @@ get-started: pre-install venv
 
 # Update project software versions in requirements
 update-reqs:
-    uv lock
+    uv lock --upgrade
+    uv sync
     pre-commit autoupdate
 
 # create virtual environment
@@ -32,9 +33,6 @@ venv:
     uv sync
     uv tool install pre-commit
     uv run pre-commit install
-
-activate-venv:
-    uv shell
 
 # launch jupyter lab
 lab:
@@ -66,15 +64,15 @@ lint-sql:
 
 # Format all markdown and config files
 fmt-markdown:
-    uv run mdformat .
+    markdownlint-cli2 --config {{ justfile_directory() }}/.markdownlint.yaml "**/*.{md,qmd}" "#.venv" --fix
 
 # Format a single markdown file, "f"
 fmt-md f:
-    uv run mdformat {{ f }}
+    markdownlint-cli2 --config {{ justfile_directory() }}/.markdownlint.yaml {{ f }} --fix
 
 # Check format of all markdown files
 fmt-check-markdown:
-    uv run mdformat --check .
+    markdownlint-cli2 --config {{ justfile_directory() }}/.markdownlint.yaml "**/*.{md,qmd}" "#.venv"
 
 fmt-all: lint-py fmt-python lint-sql fmt-markdown
 
@@ -85,13 +83,13 @@ pre-commit-run:
 [windows]
 pre-install:
     winget install Casey.Just astral-sh.uv GitHub.cli Posit.Quarto OpenJS.NodeJS
-    npm install -g markdownlint-cli
+    npm install -g markdownlint-cli2
 
 [linux]
 pre-install:
-    brew install just uv gh markdownlint-cli
+    brew install just uv gh markdownlint-cli2
 
 [macos]
 pre-install:
-    brew install just uv gh markdownlint-cli
+    brew install just uv gh markdownlint-cli2
     brew install --cask quarto

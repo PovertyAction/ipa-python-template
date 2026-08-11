@@ -18,10 +18,10 @@ should also have Git installed
 To get started, make sure you have `Just` installed on your computer by running the
 following from the command line:
 
-| Platform  | Commands                                                            |
-| --------- | ------------------------------------------------------------------- |
+| Platform  | Commands                                                                 |
+| --------- | ------------------------------------------------------------------------ |
 | Windows   | `winget install Git.Git Casey.Just astral-sh.uv GitHub.cli Posit.Quarto` |
-| Mac/Linux | `brew install just uv gh`                                          |
+| Mac/Linux | `brew install just uv gh`                                                |
 
 This will make sure that you have the latest version of `Just`, as well as
 [uv](https://docs.astral.sh/uv/) (installer for Python) and

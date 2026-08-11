@@ -22,3 +22,8 @@ MD024:
   siblings_only: true
 
 MD038: false
+
+# MD060/table-column-style
+# Disabled: emoji columns have inconsistent display width vs character
+# count, making "aligned" pipe style unachievable by hand.
+MD060: false

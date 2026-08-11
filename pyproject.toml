@@ -16,12 +16,8 @@ dependencies = [
 ]
 
 
-[tool.uv]
-dev-dependencies = [
-    "codespell>=2.4.1",
-    "pre-commit>=4.2.0",
-    "ruff>=0.7.4",
-]
+[dependency-groups]
+dev = ["codespell>=2.4.1", "pre-commit>=4.2.0", "ruff>=0.7.4"]
 
 [tool.ruff]
 line-length = 88
