@@ -11,7 +11,7 @@ dependencies = [
     "jupyter>=1.1.1",
     "jupytext>=1.17.2",
     "pandas>=2.2.3",
-    "polars>=1.17.1",
+    "polars>=1.43.2",
     "seaborn>=0.13.2",
 ]
 
